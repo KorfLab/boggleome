@@ -1,7 +1,7 @@
 boggleome
 =========
 
-A fun algorithmic challenge with prizes!
+An advanced algorithmic challenge.
 
 ## Boggle ##
 
@@ -20,18 +20,8 @@ Boggle is a word game where you connect letters to create words. Whoever finds t
 
 ## Challenge 1: Solving Boggle ##
 
-Making a boggle solver is a little complicated because you have to try many paths on the board and keep checking them against a dictionary. You can do it in your mind easily enough, but writing the algorithm takes a little work. Whoever writes the fastest algorithm wins Challenge 1.
+Making a boggle solver is a little complicated because you have to try many paths on the board and keep checking them against a dictionary. You can do it in your mind easily enough, but writing the algorithm takes a little work.
 
 ## Challenge 2: Solving Maximum Words ##
 
-Find the Boggle board with the most words. That is, what combination of 4x4 letters (or whatever) has the most words embedded in it? Whoever writes the algorithm that finds the most words wins Challenge 2.
-
-## Notes ##
-
-+ The word list, board dimensions, and minimum word length are not specified ahead of time.
-+ Challenge 1 takes place before Challenge 2, so everyone can use the fastest algorithm in Challenge 1 for Challenge 2.
-+ Make a directory in this repo for you or your team's code.
-
-## Prizes ##
-
-Yes, there will be prizes.
+Find the Boggle board with the most words. That is, what combination of 4x4 letters (or whatever) has the most words embedded in it?
