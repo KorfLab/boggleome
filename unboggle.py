@@ -1,7 +1,7 @@
 import argparse
 import random
-import sys
 
+alph = 'aaaabcddeeeeeefghhhiiiijkllmnnnooopqrrrsssttttuvwxyz'
 
 def read_into_tree(file):
 	head = {}
@@ -46,11 +46,15 @@ def copy_board(b):
 			new[i][j] = b[i][j]
 	return new
 
+def random_letter():
+	return random.choice(alph)
+
 def random_board(s):
+	
 	board = new_board(s)
 	for i in range(s):
 		for j in range(s):
-			board[i][j] = random.choice('aabcdeefghiijklmnoopqrstuuvwxyz')
+			board[i][j] = random_letter()
 	return board
 
 def show_board(b):
@@ -63,7 +67,7 @@ def show_board(b):
 		print('|')
 	print(h)
 
-def solve_board(b, d):
+def solve_board(b, d, m):
 	size = len(b)
 	words = []
 	for i in range(size):
@@ -74,7 +78,12 @@ def solve_board(b, d):
 			if word_in_dictionary(d, chain):
 				words.append(chain)
 			find_words(b, d, i, j, path, chain, words)
-	return words
+
+	unique = {}
+	for word in words:
+		if len(word) < m: continue
+		unique[word] = True
+	for word in sorted(unique): yield word
 
 def find_words(b, d, x0, y0, path, chain, words):
 	size = len(b)
@@ -95,9 +104,9 @@ def find_words(b, d, x0, y0, path, chain, words):
 if __name__ == '__main__':
 	
 	parser = argparse.ArgumentParser(
-		description='Boogle Challenge Solver')
+		description='Demo Boogle Solver')
 	parser.add_argument('dictionary', type=str, metavar='<file>',
-		help='dictionary file')                
+		help='dictionary file')
 	parser.add_argument('--min', required=False, type=int, default=3,
 		metavar='<int>', help='minimum word length [%(default)i]')
 	parser.add_argument('--size', required=False, type=int, default=4,
@@ -113,9 +122,6 @@ if __name__ == '__main__':
 	for i in range(100):
 		b = random_board(arg.size)
 		show_board(b)
-		words = solve_board(b, d)
-		unique = {}
-		for word in words:
-			if len(word) < arg.min: continue
-			unique[word] = True
-		for word in sorted(unique): print(word)
+		for word in solve_board(b, d, arg.min):
+			print(word)
+		
