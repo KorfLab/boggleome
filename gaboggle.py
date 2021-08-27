@@ -17,7 +17,6 @@ def mate(d, p1, p2, mut):
 				child['gen'][i][j] = p1['gen'][i][j]
 			else:
 				child['gen'][i][j] = p2['gen'][i][j]
-	child['fit'] = fitness(d, child['gen'])
 
 	# mutation
 	for i in range(size):
@@ -25,6 +24,9 @@ def mate(d, p1, p2, mut):
 			if random.random() < mut:
 				child['gen'][i][j] = unboggle.random_letter()
 
+	# finalization
+	child['fit'] = fitness(d, child['gen'])
+	
 	return child
 
 if __name__ == '__main__':
@@ -45,6 +47,8 @@ if __name__ == '__main__':
 		metavar='<int>', help='mutation frequency [%(default).2f]')
 	parser.add_argument('--seed', required=False, type=int,
 		metavar='<int>', help='random seed')
+	parser.add_argument('--verbose', action='store_true', help='show progress')
+	parser.add_argument('--words', action='store_true', help='show all words')
 	arg = parser.parse_args()
 	
 	# setup
@@ -62,7 +66,8 @@ if __name__ == '__main__':
 	half = arg.pop // 2
 	for g in range(arg.gen):
 		pop = sorted(pop, key=lambda item: item['fit'], reverse=True)
-		print(f'generation: {g}, maximum words: {pop[0]["fit"]}')
+		if arg.verbose:
+			print(f'generation: {g}, maximum words: {pop[0]["fit"]}')
 		for i in range(half, len(pop)):
 			p1 = random.randint(0, half)
 			p2 = random.randint(0, half)
@@ -71,6 +76,8 @@ if __name__ == '__main__':
 	# report best board
 	pop = sorted(pop, key=lambda item: item['fit'], reverse=True)
 	unboggle.show_board(pop[0]['gen'])
-	for word in unboggle.solve_board(pop[0]['gen'], d, arg.min):
-		print(word)
+	print('words:', pop[0]['fit'])
+	if arg.words:
+		for word in unboggle.solve_board(pop[0]['gen'], d, arg.min):
+			print(word)
 	

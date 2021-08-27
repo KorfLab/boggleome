@@ -73,7 +73,7 @@ def solve_board(b, d, m):
 	for i in range(size):
 		for j in range(size):
 			path = new_board(size)
-			path[i][j] = 1
+			path[i][j] = '*'
 			chain = b[i][j]
 			if word_in_dictionary(d, chain):
 				words.append(chain)
@@ -94,12 +94,14 @@ def find_words(b, d, x0, y0, path, chain, words):
 		if x < 0 or x == size: continue
 		if y < 0 or y == size: continue
 		if path[x][y] != '.':  continue
-		chain += b[x][y]
-		if word_in_dictionary(d, chain):
-			words.append(chain)
-		if word_extends(d, chain):
-			path2 = copy_board(path)
-			find_words(b, d, x, y, path2, chain, words)
+		word = chain + b[x][y]
+		if not word_extends(d, word): continue
+		
+		path[x][y] = '*'
+		if word_in_dictionary(d, word):
+			words.append(word)
+		path2 = copy_board(path)
+		find_words(b, d, x, y, path2, word, words)
 
 if __name__ == '__main__':
 	
@@ -118,10 +120,8 @@ if __name__ == '__main__':
 	if arg.seed: random.seed(arg.seed)
 	
 	d = read_into_tree(arg.dictionary)
-	
-	for i in range(100):
-		b = random_board(arg.size)
-		show_board(b)
-		for word in solve_board(b, d, arg.min):
-			print(word)
+	b = random_board(arg.size)
+	show_board(b)
+	for word in solve_board(b, d, arg.min):
+		print(word)
 		
