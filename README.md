@@ -26,12 +26,12 @@ Making a boggle solver is a little complicated because you have to try many path
 
 Find the Boggle board with the most words. That is, what combination of 4x4 letters (or whatever) has the most words embedded in it? Whoever writes the algorithm that finds the most words wins Challenge 2.
 
-## Prizes ##
-
-Yes, there will be prizes.
-
 ## Notes ##
 
 The word list, board dimensions, and minimum word length are not specified ahead of time.
 
 Challenge 1 takes place before Challenge 2, so everyone can use the fastest algorithm in Challenge 1 for Challenge 2.
+
+## Prizes ##
+
+Yes, there will be prizes.
