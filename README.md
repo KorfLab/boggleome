@@ -14,7 +14,7 @@ Boggle is a word game where you connect letters to create words. Whoever finds t
 
 ## Setup ##
 
-1. You need a dictionary (e.g. https://github.com/dwyl/english-words)
+1. You need a dictionary (e.g. https://github.com/first20hours/google-10000-english, https://github.com/dolph/dictionary, https://github.com/dwyl/english-words)
 2. You need to decide on board size (4x4 by default, but what not 5x5?)
 3. You need to decide on minimum word length (3 by default, but maybe more?)
 
@@ -29,3 +29,9 @@ Find the Boggle board with the most words. That is, what combination of 4x4 lett
 ## Prizes ##
 
 Yes, there will be prizes.
+
+## Notes ##
+
+The word list, board dimensions, and minimum word length are not specified ahead of time.
+
+Challenge 1 takes place before Challenge 2, so everyone can use the fastest algorithm in Challenge 1 for Challenge 2.
