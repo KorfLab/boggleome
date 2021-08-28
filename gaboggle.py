@@ -9,7 +9,7 @@ def fitness(d, b):
 def mate(d, p1, p2, mut):
 	size = len(p1['gen'])
 	child = {'gen': unboggle.new_board(size), 'fit': None}
-	
+
 	# recombination
 	for i in range(size):
 		for j in range(size):
@@ -26,11 +26,11 @@ def mate(d, p1, p2, mut):
 
 	# finalization
 	child['fit'] = fitness(d, child['gen'])
-	
+
 	return child
 
 if __name__ == '__main__':
-	
+
 	parser = argparse.ArgumentParser(
 		description='Boogle Board Breeder')
 	parser.add_argument('dictionary', type=str, metavar='<file>',
@@ -43,6 +43,8 @@ if __name__ == '__main__':
 		metavar='<int>', help='population size [%(default)i]')
 	parser.add_argument('--gen', required=False, type=int, default=100,
 		metavar='<int>', help='generations [%(default)i]')
+	parser.add_argument('--die', required=False, type=float, default=0.5,
+		metavar='<int>', help='fraction that die each gen [%(default).2f]')
 	parser.add_argument('--mut', required=False, type=float, default=0.1,
 		metavar='<int>', help='mutation frequency [%(default).2f]')
 	parser.add_argument('--seed', required=False, type=int,
@@ -50,20 +52,20 @@ if __name__ == '__main__':
 	parser.add_argument('--verbose', action='store_true', help='show progress')
 	parser.add_argument('--words', action='store_true', help='show all words')
 	arg = parser.parse_args()
-	
+
 	# setup
 	if arg.seed: random.seed(arg.seed)
 	d = unboggle.read_into_tree(arg.dictionary)
-	
+
 	# create initial population
 	pop = []
 	for i in range(arg.pop):
 		pop.append({'gen': unboggle.random_board(arg.size), 'fit': None})
 	for ind in pop:
 		ind['fit'] = fitness(d, ind['gen'])
-	
+
 	# evolve
-	half = arg.pop // 2
+	half = int(arg.pop * (1-arg.die))
 	for g in range(arg.gen):
 		pop = sorted(pop, key=lambda item: item['fit'], reverse=True)
 		if arg.verbose:
@@ -72,7 +74,7 @@ if __name__ == '__main__':
 			p1 = random.randint(0, half)
 			p2 = random.randint(0, half)
 			pop[i] = mate(d, pop[p1], pop[p2], arg.mut)
-	
+
 	# report best board
 	pop = sorted(pop, key=lambda item: item['fit'], reverse=True)
 	unboggle.show_board(pop[0]['gen'])
@@ -80,4 +82,4 @@ if __name__ == '__main__':
 	if arg.words:
 		for word in unboggle.solve_board(pop[0]['gen'], d, arg.min):
 			print(word)
-	
+
